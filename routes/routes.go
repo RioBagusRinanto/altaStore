@@ -13,6 +13,7 @@ func New() *echo.Echo {
 	e.GET("/customers", controller.GetCustomersController)
 	e.GET("/sellers", controller.GetSellersController)
 	e.GET("/payments", controller.GetPaymentsController)
+	e.GET("/categories", controller.GetCategoriesController)
 
 	return e
 }
