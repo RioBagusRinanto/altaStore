@@ -15,7 +15,7 @@ func GetProductsController(c echo.Context) error {
 
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status":   "success",
-		"products": products,
+		"Status": "success",
+		"Data":   products,
 	})
 }

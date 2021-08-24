@@ -15,7 +15,7 @@ func GetPaymentsController(c echo.Context) error {
 
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status":   "success",
-		"products": payments,
+		"Status": "success",
+		"Data":   payments,
 	})
 }

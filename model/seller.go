@@ -1,9 +1,9 @@
 package model
 
 type Sellers struct {
-	Username string `json:"username" form:"username"`
-	Password string `json:"password" form:"password"`
-	Alamat   string `json:"alamat" form:"alamat"`
-	Toko     string `json:"nama_toko" form:"nama_toko"`
-	Email    string `json:"email" form:"email"`
+	Username string `json:"Username" form:"username"`
+	Password string `json:"Password" form:"password"`
+	Alamat   string `json:"Alamat" form:"alamat"`
+	Toko     string `json:"Nama_toko" form:"nama_toko"`
+	Email    string `json:"Email" form:"email"`
 }

@@ -7,8 +7,8 @@ import (
 	"github.com/labstack/echo"
 )
 
-func GetSellersController(c echo.Context) error {
-	sellers, e := database.GetSellers()
+func GetCartsController(c echo.Context) error {
+	carts, e := database.GetCarts()
 	// fmt.Println(products)
 	if e != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, e.Error())
@@ -16,6 +16,6 @@ func GetSellersController(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"Status": "success",
-		"Data":   sellers,
+		"Data":   carts,
 	})
 }
