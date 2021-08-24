@@ -18,6 +18,7 @@ func New() *echo.Echo {
 	e.GET("/carts", controller.GetCartsController)
 	e.GET("/cartDetails", controller.GetCartDetailsController)
 	e.GET("/checkouts", controller.GetCheckoutsController)
+	e.GET("/shipments", controller.GetShipmentsController)
 
 	//insert data
 	e.POST("/shipments", controller.InsertShipmentsController)
@@ -30,5 +31,8 @@ func New() *echo.Echo {
 	e.POST("/products", controller.InsertProductController)
 	e.POST("/sellers", controller.InsertSellerController)
 	e.POST("/shipments", controller.InsertShipmentsController)
+
+	//get by key
+	e.GET("/shipment", controller.GetShipmentByIdController)
 	return e
 }
