@@ -14,3 +14,13 @@ func GetShipments() (interface{}, error) {
 	return shipments, nil
 
 }
+
+func InsertShipments(s model.Shipments) (interface{}, error) {
+	var shipments []model.Shipments
+
+	if e := config.DB.Create(&s).Error; e != nil {
+		return nil, e
+	}
+
+	return shipments, nil
+}

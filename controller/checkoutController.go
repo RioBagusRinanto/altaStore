@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"altaStore/config"
 	"altaStore/lib/database"
+	"altaStore/model"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -13,6 +15,19 @@ func GetCheckoutsController(c echo.Context) error {
 	if e != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, e.Error())
 
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"Status": "success",
+		"Data":   checkout,
+	})
+}
+
+func InsertCheckoutsController(c echo.Context) error {
+	checkout := model.Checkouts{}
+	c.Bind(&checkout)
+
+	if err := config.DB.Create(&checkout).Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"Status": "success",
