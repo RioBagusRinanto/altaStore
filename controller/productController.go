@@ -81,18 +81,15 @@ func UpdateProductByIsSeller(c echo.Context) error {
 	product := model.Products{}
 	c.Bind(&product)
 
-	// productDB, _ := database.GetProductById(product.Id_category)
-
 	res, err := database.UpdateProduct(product)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"status": "gagal simpan data",
 			"error":  err,
 		})
+	} else if err == nil {
+		res, _ = database.GetProductById(product.Id_product)
 	}
-	//  else if err == nil {
-	// 	res, _ = database.GetProductById(product.Id_product)
-	// }
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"status": "success",
 		"data":   res,

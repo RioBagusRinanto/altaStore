@@ -10,7 +10,6 @@ func New() *echo.Echo {
 	e := echo.New()
 
 	//get all products
-	e.GET("/products", controller.GetProductsController)
 	e.GET("/customers", controller.GetCustomersController)
 	e.GET("/sellers", controller.GetSellersController)
 	e.GET("/payments", controller.GetPaymentsController)
@@ -40,9 +39,13 @@ func New() *echo.Echo {
 	e.POST("/beli", controller.AddtoCartController)
 
 	//seller
-	e.GET("/sellersproduct", controller.GetProductBySellerController)
-	e.POST("/products", controller.InsertProductController)
-	e.PUT("/updateproduct", controller.UpdateProductByIsSeller)
-	e.DELETE("/deleteproduct", controller.DeleteProductByIdController)
+	e.GET("/sellersproduct", controller.GetProductBySellerController)  //list produk dijual oleh seller
+	e.POST("/products", controller.InsertProductController)            //entry produk baru
+	e.PUT("/updateproduct", controller.UpdateProductByIsSeller)        //rubah detail produk
+	e.DELETE("/deleteproduct", controller.DeleteProductByIdController) //hapus produk
+
+	//customer
+	e.GET("/products", controller.GetProductsController) //list produk
+
 	return e
 }
