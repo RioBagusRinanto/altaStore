@@ -17,20 +17,20 @@ func GetCategoriesController(c echo.Context) error {
 
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   categories,
+		"status": "success",
+		"data":   categories,
 	})
 }
 
 func InsertCategoryController(c echo.Context) error {
-	categories := model.Category{}
+	categories := model.Categories{}
 	c.Bind(&categories)
 
 	if err := config.DB.Create(&categories).Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   categories,
+		"status": "success",
+		"data":   categories,
 	})
 }

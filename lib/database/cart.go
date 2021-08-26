@@ -14,3 +14,12 @@ func GetCarts() (interface{}, error) {
 	return carts, nil
 
 }
+
+func GetCartByIdCust(idCust int) (interface{}, error) {
+	var carts []model.Carts
+
+	if e := config.DB.Where("id_customer = ?", idCust).First(&carts).Error; e != nil {
+		return nil, e
+	}
+	return carts, nil
+}

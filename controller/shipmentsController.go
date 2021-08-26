@@ -17,8 +17,8 @@ func GetShipmentsController(c echo.Context) error {
 
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   shipments,
+		"status": "success",
+		"data":   shipments,
 	})
 }
 
@@ -30,8 +30,8 @@ func InsertShipmentsController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   shipments,
+		"status": "success",
+		"data":   shipments,
 	})
 }
 
@@ -43,7 +43,7 @@ func GetShipmentByIdController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   shipments,
+		"status": "success",
+		"data":   shipments,
 	})
 }

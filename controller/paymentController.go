@@ -17,8 +17,8 @@ func GetPaymentsController(c echo.Context) error {
 
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   payments,
+		"status": "success",
+		"data":   payments,
 	})
 }
 
@@ -30,7 +30,7 @@ func InsertPaymentController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   payments,
+		"status": "success",
+		"data":   payments,
 	})
 }

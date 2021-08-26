@@ -4,6 +4,7 @@ import (
 	"altaStore/config"
 	"altaStore/lib/database"
 	"altaStore/model"
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -16,8 +17,8 @@ func GetCustomersController(c echo.Context) error {
 
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   customers,
+		"status": "success",
+		"data":   customers,
 	})
 }
 
@@ -29,7 +30,26 @@ func InsertCustomerController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   customers,
+		"status": "success",
+		"data":   customers,
 	})
+}
+
+func AddtoCartController(c echo.Context) error {
+	var json map[string]interface{} = map[string]interface{}{}
+	c.Bind(&json)
+	customer := json["id_customer"].(int)
+	productId := json["id_product"]
+	jumlah := json["jumlah"]
+	fmt.Println(customer)
+	fmt.Println(productId)
+	fmt.Println(jumlah)
+	//get cart dengan id customer & status 1
+	carts, _ := database.GetCartByIdCust(customer)
+	if carts == nil {
+		//insert cart baru
+	}
+	//get product id + validasi stok
+	//
+	return nil
 }

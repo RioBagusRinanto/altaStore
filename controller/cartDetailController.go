@@ -17,8 +17,8 @@ func GetCartDetailsController(c echo.Context) error {
 
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   cartDetails,
+		"status": "success",
+		"data":   cartDetails,
 	})
 }
 
@@ -30,7 +30,7 @@ func InsertCartDetailController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"Status": "success",
-		"Data":   cartDetails,
+		"status": "success",
+		"data":   cartDetails,
 	})
 }

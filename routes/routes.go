@@ -28,11 +28,20 @@ func New() *echo.Echo {
 	e.POST("/checkouts", controller.InsertCheckoutsController)
 	e.POST("/customers", controller.InsertCustomerController)
 	e.POST("/payments", controller.InsertPaymentController)
-	e.POST("/products", controller.InsertProductController)
+
 	e.POST("/sellers", controller.InsertSellerController)
 	e.POST("/shipments", controller.InsertShipmentsController)
 
 	//get by key
 	e.GET("/shipment", controller.GetShipmentByIdController)
+	e.GET("/product", controller.GetProductByIdController)
+
+	//transaksi
+	e.POST("/beli", controller.AddtoCartController)
+
+	//seller
+	e.GET("/sellersproduct", controller.GetProductBySellerController)
+	e.POST("/products", controller.InsertProductController)
+	e.PUT("/updateproduct", controller.UpdateProductByIsSeller)
 	return e
 }

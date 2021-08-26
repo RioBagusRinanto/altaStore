@@ -6,7 +6,7 @@ import (
 )
 
 func GetCategories() (interface{}, error) {
-	var categories []model.Category
+	var categories []model.Categories
 
 	if e := config.DB.Find(&categories).Error; e != nil {
 		return nil, e
