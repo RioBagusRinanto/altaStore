@@ -81,6 +81,8 @@ func UpdateProductByIsSeller(c echo.Context) error {
 	product := model.Products{}
 	c.Bind(&product)
 
+	// productDB, _ := database.GetProductById(product.Id_category)
+
 	res, err := database.UpdateProduct(product)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -94,5 +96,20 @@ func UpdateProductByIsSeller(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"status": "success",
 		"data":   res,
+	})
+}
+
+func DeleteProductByIdController(c echo.Context) error {
+	idProd, _ := strconv.Atoi(c.QueryParam("idproduct"))
+	_, err := database.DeleteProductById(idProd)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "gagal hapus data",
+			"error":  err,
+		})
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status":  "success",
+		"message": "data sukses terhapus",
 	})
 }

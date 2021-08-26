@@ -43,5 +43,6 @@ func New() *echo.Echo {
 	e.GET("/sellersproduct", controller.GetProductBySellerController)
 	e.POST("/products", controller.InsertProductController)
 	e.PUT("/updateproduct", controller.UpdateProductByIsSeller)
+	e.DELETE("/deleteproduct", controller.DeleteProductByIdController)
 	return e
 }

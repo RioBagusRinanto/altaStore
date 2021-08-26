@@ -18,7 +18,7 @@ func GetProducts() (interface{}, error) {
 
 func GetProductById(id int) (interface{}, error) {
 	products := model.Products{}
-	if err := config.DB.Preload("Categori").Preload("Seller").Find(&products, model.Products{Id_product: id}).Error; err != nil {
+	if err := config.DB.Preload("Categori").Preload("Seller").First(&products, model.Products{Id_product: id}).Error; err != nil {
 		return nil, err
 	}
 	if products.Stock == 0 {
@@ -50,4 +50,12 @@ func UpdateProduct(prod model.Products) (interface{}, error) {
 	}
 	return prod, nil
 
+}
+
+func DeleteProductById(idProd int) (interface{}, error) {
+	product := model.Products{}
+	if err := config.DB.Where("id_product = ?", idProd).Delete(&product).Error; err != nil {
+		return nil, err
+	}
+	return product, nil
 }
