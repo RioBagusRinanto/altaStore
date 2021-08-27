@@ -59,3 +59,12 @@ func DeleteProductById(idProd int) (interface{}, error) {
 	}
 	return product, nil
 }
+
+func UpdateStockProduct(idProd int, stock int) (interface{}, error) {
+	product := model.Products{}
+
+	if err := config.DB.Model(&product).Where("id_product = ?", idProd).Update("stock", stock).Error; err != nil {
+		return nil, err
+	}
+	return product, nil
+}
