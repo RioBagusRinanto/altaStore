@@ -48,3 +48,12 @@ func GetCartDetailIdcartIdprod(idcart, idprod int) (interface{}, error) {
 	}
 	return carts, nil
 }
+
+func GetCartDetailsByIdCart(id int) (interface{}, error) {
+	carts := []model.CartDetails{}
+
+	if e := config.DB.Where("id_cart = ?", id).Preload("Cart").Preload("Product").Find(&carts).Error; e != nil {
+		return nil, e
+	}
+	return carts, nil
+}
