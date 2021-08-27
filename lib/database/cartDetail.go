@@ -24,9 +24,9 @@ func CreateCartDetail(entry model.CartDetails) (interface{}, error) {
 }
 
 func GetCartDetailByIdCart(id int) (interface{}, error) {
-	var carts []model.CartDetails
+	carts := model.CartDetails{}
 
-	if e := config.DB.Preload("Cart").Preload("Product").Where("id_cart = ?", id).First(&carts).Error; e != nil {
+	if e := config.DB.Where("id_cart = ?", id).First(&carts).Error; e != nil {
 		return nil, e
 	}
 	return carts, nil
@@ -34,7 +34,7 @@ func GetCartDetailByIdCart(id int) (interface{}, error) {
 
 func UpdateCartDetailProduc(idCart, IdProd, valProd int) (interface{}, error) {
 	cd := model.CartDetails{}
-	if e := config.DB.Where("id_cart = ?", idCart, "AND id_product = ?", IdProd).Update("jumlah", valProd).Error; e != nil {
+	if e := config.DB.Model(cd).Where("id_cart = ?", idCart, "AND id_product = ?", IdProd).Update("jumlah", valProd).Error; e != nil {
 		return nil, e
 	}
 	return cd, nil

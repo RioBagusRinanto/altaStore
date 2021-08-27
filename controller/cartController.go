@@ -5,6 +5,7 @@ import (
 	"altaStore/lib/database"
 	"altaStore/model"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo"
 )
@@ -28,6 +29,19 @@ func InsertCartController(c echo.Context) error {
 
 	if err := config.DB.Create(&carts).Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success",
+		"data":   carts,
+	})
+}
+
+func GetCartByIdCustController(c echo.Context) error {
+	idcust, _ := strconv.Atoi(c.QueryParam("idcust"))
+
+	carts, e := database.GetCartByIdCust(idcust, "cart")
+	if e != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, e.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"status": "success",

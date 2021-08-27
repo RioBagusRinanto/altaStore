@@ -46,6 +46,7 @@ func New() *echo.Echo {
 
 	//customer
 	e.GET("/products", controller.GetProductsController) //list produk
+	e.GET("/cartCust", controller.GetCartByIdCustController)
 
 	return e
 }

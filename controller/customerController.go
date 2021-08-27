@@ -38,6 +38,7 @@ func InsertCustomerController(c echo.Context) error {
 }
 
 func AddtoCartController(c echo.Context) error {
+	// get query param yg dikirim
 	customer, _ := strconv.Atoi(c.QueryParam("iduser"))
 	productId, _ := strconv.Atoi(c.QueryParam("idproduct"))
 	jumlah, _ := strconv.Atoi(c.QueryParam("jumlah"))
@@ -46,8 +47,10 @@ func AddtoCartController(c echo.Context) error {
 	products, _ := database.GetProductById(productId)
 	b := model.Products{}
 	mapstructure.Decode(products, &b)
+
+	//jika produk tidak ditemukan
 	if products == nil {
-		return c.JSON(http.StatusNoContent, map[string]interface{}{
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"status": "produk tidak ditemukan",
 		})
 	} else if b.Stock < jumlah {
@@ -58,7 +61,9 @@ func AddtoCartController(c echo.Context) error {
 
 	//get cart dengan id customer & status
 	carts, _ := database.GetCartByIdCust(customer, "cart")
+	fmt.Println(carts)
 	if carts == nil {
+		fmt.Println("carts nil")
 		//insert cart baru
 		cart := model.Carts{}
 		cart.Id_customer = customer
@@ -71,7 +76,6 @@ func AddtoCartController(c echo.Context) error {
 		}
 		c := model.Carts{}
 		mapstructure.Decode(cartRes, &c)
-
 		detailCart := model.CartDetails{}
 		detailCart.Id_cart = c.Id_cart
 		detailCart.Id_product = b.Id_product
@@ -87,18 +91,24 @@ func AddtoCartController(c echo.Context) error {
 			fmt.Println(errUpdateProd)
 		}
 		fmt.Println("cart sukses dibuat")
-	} else {
+	} else if carts != nil {
+		fmt.Println("cart not nil")
+		//jika cart ada
 		c := model.Carts{}
 		mapstructure.Decode(carts, &c)
-
 		cd := model.CartDetails{}
 		cdetails, _ := database.GetCartDetailByIdCart(c.Id_cart)
 		mapstructure.Decode(cdetails, &cd)
+		fmt.Println("id cart = ", c.Id_cart)
 		//get product yg ada update bila ada yang sama
 		if productId == cd.Id_product {
-			_, errUpdateCD := database.UpdateCartDetailProduc(cd.Id_cart, productId, (cd.Jumlah + jumlah))
+			_, errUpdateCD := database.UpdateCartDetailProduc(c.Id_cart, productId, (cd.Jumlah + jumlah))
 			if errUpdateCD != nil {
 				fmt.Println(errUpdateCD)
+			}
+			_, errupdateprice := database.UpdatePriceTotal(c.Id_cart, (c.Total + (b.Harga_satuan * jumlah)))
+			if errupdateprice != nil {
+				fmt.Println(errupdateprice)
 			}
 		}
 
