@@ -14,3 +14,10 @@ func GetCheckouts() (interface{}, error) {
 	return checkouts, nil
 
 }
+
+func AddCArttoCheckoutByIdCart(entry model.Checkouts) (interface{}, error) {
+	if e := config.DB.Create(&entry).Error; e != nil {
+		return nil, e
+	}
+	return entry, nil
+}

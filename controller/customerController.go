@@ -97,7 +97,7 @@ func AddtoCartController(c echo.Context) error {
 		c := model.Carts{}
 		mapstructure.Decode(carts, &c)
 		cd := model.CartDetails{}
-		cdetails, _ := database.GetCartDetailByIdCart(c.Id_cart)
+		cdetails, _ := database.GetCartDetailIdcartIdprod(cd.Id_cart, cd.Id_product)
 		mapstructure.Decode(cdetails, &cd)
 		fmt.Println("id cart = ", c.Id_cart)
 		//get product yg ada update bila ada yang sama

@@ -34,3 +34,22 @@ func InsertCheckoutsController(c echo.Context) error {
 		"data":   checkout,
 	})
 }
+
+func AddCartToCheckoutByIdCartController(c echo.Context) error {
+	checkout := model.Checkouts{}
+	c.Bind(&checkout)
+
+	res, err := database.AddCArttoCheckoutByIdCart(checkout)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	_, errUpdt := database.UpdateCartStatus(checkout.Id_cart, "checkout")
+	if errUpdt != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success",
+		"data":   res,
+	})
+}

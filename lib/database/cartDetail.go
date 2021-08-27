@@ -34,8 +34,17 @@ func GetCartDetailByIdCart(id int) (interface{}, error) {
 
 func UpdateCartDetailProduc(idCart, IdProd, valProd int) (interface{}, error) {
 	cd := model.CartDetails{}
-	if e := config.DB.Model(cd).Where("id_cart = ?", idCart, "AND id_product = ?", IdProd).Update("jumlah", valProd).Error; e != nil {
+	if e := config.DB.Model(cd).Where("id_cart = ? AND id_product = ?", idCart, IdProd).Update("jumlah", valProd).Error; e != nil {
 		return nil, e
 	}
 	return cd, nil
+}
+
+func GetCartDetailIdcartIdprod(idcart, idprod int) (interface{}, error) {
+	carts := model.CartDetails{}
+
+	if e := config.DB.Where("id_cart = ? AND id_product = ?", idcart, idprod).First(&carts).Error; e != nil {
+		return nil, e
+	}
+	return carts, nil
 }

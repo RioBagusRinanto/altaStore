@@ -18,7 +18,7 @@ func GetCarts() (interface{}, error) {
 func GetCartByIdCust(idCust int, status string) (interface{}, error) {
 	carts := model.Carts{}
 
-	if e := config.DB.Preload("Customer").Where("id_customer = ?", idCust, "AND status_pesanan = ?", status).First(&carts).Error; e != nil {
+	if e := config.DB.Preload("Customer").Where("id_customer = ? AND status_pesanan = ?", idCust, status).First(&carts).Error; e != nil {
 		return nil, e
 	}
 	return carts, nil
@@ -37,5 +37,13 @@ func UpdatePriceTotal(idCart, total int) (interface{}, error) {
 		return nil, err
 	}
 
+	return cart, nil
+}
+
+func UpdateCartStatus(id int, status string) (interface{}, error) {
+	cart := model.Carts{}
+	if err := config.DB.Model(&cart).Where("id_cart = ?", id).Update("status_pesanan", status).Error; err != nil {
+		return nil, err
+	}
 	return cart, nil
 }
