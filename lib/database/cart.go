@@ -15,11 +15,18 @@ func GetCarts() (interface{}, error) {
 
 }
 
-func GetCartByIdCust(idCust int) (interface{}, error) {
+func GetCartByIdCust(idCust int, status string) (interface{}, error) {
 	var carts []model.Carts
 
-	if e := config.DB.Where("id_customer = ?", idCust).First(&carts).Error; e != nil {
+	if e := config.DB.Where("id_customer = ?", idCust, "AND status_pesanan = ?", status).First(&carts).Error; e != nil {
 		return nil, e
 	}
 	return carts, nil
+}
+
+func CreateCart(cart model.Carts) (interface{}, error) {
+	if err := config.DB.Create(&cart).Error; err != nil {
+		return nil, err
+	}
+	return cart, nil
 }

@@ -4,8 +4,10 @@ import (
 	"altaStore/config"
 	"altaStore/lib/database"
 	"altaStore/model"
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo"
 )
@@ -36,19 +38,42 @@ func InsertCustomerController(c echo.Context) error {
 }
 
 func AddtoCartController(c echo.Context) error {
-	var json map[string]interface{} = map[string]interface{}{}
-	c.Bind(&json)
-	customer := json["id_customer"].(int)
-	productId := json["id_product"]
-	jumlah := json["jumlah"]
-	fmt.Println(customer)
-	fmt.Println(productId)
-	fmt.Println(jumlah)
-	//get cart dengan id customer & status 1
-	carts, _ := database.GetCartByIdCust(customer)
+	customer, _ := strconv.Atoi(c.QueryParam("iduser"))
+	productId, _ := strconv.Atoi(c.QueryParam("idproduct"))
+	// jumlah, _ := strconv.Atoi(c.QueryParam("jumlah"))
+	// jumlah := json["jumlah"]
+
+	//get product
+	products, _ := database.GetProductById(productId)
+	b, _ := json.Marshal(products)
+	res := json.Unmarshal(b, &model.Products{})
+	fmt.Println(res)
+	// if products == nil {
+	// 	return c.JSON(http.StatusNoContent, map[string]interface{}{
+	// 		"status": "produk tidak ditemukan",
+	// 	})
+	// }
+
+	//get cart dengan id customer & status
+	carts, _ := database.GetCartByIdCust(customer, "cart")
 	if carts == nil {
 		//insert cart baru
+		cart := model.Carts{}
+		cart.Id_customer = customer
+		cart.Total = 0
+		cart.Status_pesanan = "cart"
+		_, errCart := database.CreateCart(cart)
+		if errCart != nil {
+			fmt.Println("gagal buat cart")
+		}
+		fmt.Println("cart sukses dibuat")
 	}
+	listCartCust, _ := database.GetCarts()
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success create cart",
+		"data":   listCartCust,
+	})
 	//get product id + validasi stok
 	//
 	return nil

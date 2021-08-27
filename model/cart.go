@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// status pesanan : cart -> dalam cart belum checkout, checkout -> sudah masuk checkout
 type Carts struct {
 	Id_cart        int       `json:"id_cart" form:"id_cart" gorm:"primarykey"`
 	Total          int       `json:"total" form:"total"`
