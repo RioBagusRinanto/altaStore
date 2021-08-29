@@ -15,4 +15,5 @@ type Customers struct {
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	DeletedAt   sql.NullTime `gorm:"index"`
+	Token       string       `json:"token" form:"token"`
 }

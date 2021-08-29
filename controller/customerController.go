@@ -125,3 +125,36 @@ func AddtoCartController(c echo.Context) error {
 		"data":   listCartCust,
 	})
 }
+
+func LoginCustController(c echo.Context) error {
+	user := model.Customers{}
+	c.Bind(&user)
+
+	users, e := database.LoginCustomer(user)
+	if e != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, e.Error())
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "sukses login",
+		"user":   users,
+	})
+}
+
+func GetUserDetailController(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	fmt.Print(id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	custs, err := database.GetDetailCust(id)
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success",
+		"user":   custs,
+	})
+
+}

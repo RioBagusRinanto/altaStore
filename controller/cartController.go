@@ -37,7 +37,7 @@ func InsertCartController(c echo.Context) error {
 }
 
 func GetCartByIdCustController(c echo.Context) error {
-	idcust, _ := strconv.Atoi(c.QueryParam("idcust"))
+	idcust, _ := strconv.Atoi(c.Param("userid"))
 
 	carts, e := database.GetCartByIdCust(idcust, "cart")
 	if e != nil {

@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"altaStore/constants"
 	"altaStore/controller"
 
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 func New() *echo.Echo {
@@ -36,19 +38,25 @@ func New() *echo.Echo {
 	e.GET("/product", controller.GetProductByIdController)
 
 	//transaksi
-	e.POST("/beli", controller.AddtoCartController)
+	e.POST("/buy", controller.AddtoCartController)
 
 	//seller
-	e.GET("/sellersproduct", controller.GetProductBySellerController)  //list produk dijual oleh seller
-	e.POST("/products", controller.InsertProductController)            //entry produk baru
-	e.PUT("/updateproduct", controller.UpdateProductByIsSeller)        //rubah detail produk
-	e.DELETE("/deleteproduct", controller.DeleteProductByIdController) //hapus produk
+	e.GET("/sellersproduct", controller.GetProductBySellerController) //list produk dijual oleh seller
+	e.POST("/products", controller.InsertProductController)           //entry produk baru
+	e.PUT("/products", controller.UpdateProductByIsSeller)            //rubah detail produk
+	e.DELETE("/product", controller.DeleteProductByIdController)      //hapus produk
 
 	//customer
 	e.GET("/products", controller.GetProductsController) //list produk
-	e.GET("/cartCust", controller.GetCartByIdCustController)
-	e.POST("/addtocheckout", controller.AddCartToCheckoutByIdCartController)
-	e.GET("/detailscart", controller.GetDetailByIdCartController)
+	e.GET("/carts/:userid", controller.GetCartByIdCustController)
+	e.POST("/checkout", controller.AddCartToCheckoutByIdCartController)
+	e.GET("/carts/:userid/:cartid", controller.GetDetailByIdCartController)
+	e.POST("/login", controller.LoginCustController)
+
+	//jwt auth
+	r := e.Group("")
+	r.Use(middleware.JWT([]byte(constants.SECRET_JWT)))
+	r.GET("/customer/:id", controller.GetUserDetailController)
 
 	return e
 }
