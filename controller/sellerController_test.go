@@ -17,7 +17,7 @@ func InitEcho() *echo.Echo {
 	return e
 }
 
-func GetSellersControllerTest(t *testing.T) {
+func TestGetSellersController(t *testing.T) {
 	// var testCases = []struct {
 	// 	name                string
 	// 	path                string
@@ -61,14 +61,13 @@ func GetSellersControllerTest(t *testing.T) {
 		c := e.NewContext(req, rec)
 
 		c.SetPath("/sellers")
-
 		if assert.NoError(t, GetSellersController(c)) {
 			assert.Equal(t, http.StatusOK, rec.Code)
 		}
 	})
 	t.Run("test case 2, gagal get seller", func(t *testing.T) {
 		e := InitEcho()
-		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		req := httptest.NewRequest(http.MethodPost, "/", nil)
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
@@ -80,10 +79,23 @@ func GetSellersControllerTest(t *testing.T) {
 	})
 }
 
-func InsertSellersControllerTest(t *testing.T) {
+func TestInsertSellersController(t *testing.T) {
 
 	t.Run("test case 1, sukses insert seller", func(t *testing.T) {
 		entryseller := `{"username":"seller2", "password":"seller2", "alamat":"alamat seller2", "nama_toko":"toko2", "email":"email2@email.com"}`
+		e := InitEcho()
+		req := httptest.NewRequest(http.MethodPost, "/", strings.NewReader(entryseller))
+		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+		rec := httptest.NewRecorder()
+		c := e.NewContext(req, rec)
+		c.SetPath("/sellers")
+
+		if assert.NoError(t, InsertSellerController(c)) {
+			assert.Equal(t, http.StatusOK, rec.Code)
+		}
+	})
+	t.Run("test case 2, gagal insert seller", func(t *testing.T) {
+		entryseller := `{"id_seller":1,"username":"seller2", "password":"seller2", "alamat":"alamat seller2", "nama_toko":"toko2", "email":"email2@email.com"}`
 		e := InitEcho()
 		req := httptest.NewRequest(http.MethodPost, "/", strings.NewReader(entryseller))
 		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
