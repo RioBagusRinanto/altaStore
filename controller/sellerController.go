@@ -11,7 +11,6 @@ import (
 
 func GetSellersController(c echo.Context) error {
 	sellers, e := database.GetSellers()
-	// fmt.Println(products)
 	if e != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, e.Error())
 
