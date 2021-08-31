@@ -1,4 +1,5 @@
 module altaStore
+
 // +heroku goVersion go1.16
 go 1.16
 
@@ -6,6 +7,7 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.0.0
 	github.com/jackc/pgx/v4 v4.13.0 // indirect
 	github.com/labstack/echo/v4 v4.5.0
+	github.com/lib/pq v1.10.2 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect
 	github.com/mitchellh/mapstructure v1.4.1
 	github.com/stretchr/testify v1.7.0

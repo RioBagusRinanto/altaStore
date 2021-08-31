@@ -25,7 +25,7 @@ func InitDB() {
 	// 	"5432",
 	// 	"localhost",
 	// 	"altastore")
-	connectioString := "host=localhost user=postgres password=postgres dbname=altastore port=5432"
+	connectioString := "host=ec2-3-230-61-252.compute-1.amazonaws.com user=vuetlwgfsgchav password=61d770f099a4553df03c805ff7e21301a11f608a98e2e8b8fd85c4ce257eb331 dbname=d1as2g2c8u0g3h port=5432"
 
 	var e error
 
