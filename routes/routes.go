@@ -4,8 +4,8 @@ import (
 	"altaStore/constants"
 	"altaStore/controller"
 
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func New() *echo.Echo {
@@ -16,7 +16,7 @@ func New() *echo.Echo {
 	e.GET("/sellers", controller.GetSellersController)
 	e.GET("/payments", controller.GetPaymentsController)
 	e.GET("/categories", controller.GetCategoriesController)
-	e.GET("/carts", controller.GetCartsController)
+	// e.GET("/carts", controller.GetCartsController)
 	e.GET("/cartDetails", controller.GetCartDetailsController)
 	e.GET("/checkouts", controller.GetCheckoutsController)
 	e.GET("/shipments", controller.GetShipmentsController)

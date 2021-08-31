@@ -4,8 +4,8 @@ import (
 	"altaStore/constants"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/labstack/echo"
+	jwt "github.com/golang-jwt/jwt/v4"
+	"github.com/labstack/echo/v4"
 )
 
 func CreateToken(userId int) (string, error) {

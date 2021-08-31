@@ -7,12 +7,11 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 func GetProductsController(c echo.Context) error {
 	products, e := database.GetProducts()
-	// fmt.Println(products)
 	if e != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, e.Error())
 
@@ -27,9 +26,6 @@ func InsertProductController(c echo.Context) error {
 	products := model.Products{}
 	c.Bind(&products)
 
-	// if err := config.DB.Preload("Categori").Create(&products).Error; err != nil {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	// }
 	res, err := database.InsertProduct(products)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
