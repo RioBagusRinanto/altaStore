@@ -1,3 +1,3 @@
 package constants
 
-const SECRET_JWT = "johnnyenglish"
+const SECRET_JWT = "altastore"
